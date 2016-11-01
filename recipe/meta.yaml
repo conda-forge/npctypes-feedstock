@@ -1,6 +1,6 @@
 {% set name = "npctypes" %}
-{% set version = "0.0.1" %}
-{% set sha256 = "d725491c0e37d809015bf385f9ebe4a67b72cbcce82b8f65d88927a041401462" %}
+{% set version = "0.0.2" %}
+{% set sha256 = "79e27d0358d9768f64a30ba20f4d5e8391fb7e9eaefe112955e8e066abce3005" %}
 
 package:
   name: {{ name|lower }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   script: python setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
