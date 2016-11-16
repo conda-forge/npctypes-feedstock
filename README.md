@@ -33,7 +33,6 @@ conda search npctypes --channel conda-forge
 ```
 
 
-
 About conda-forge
 =================
 
