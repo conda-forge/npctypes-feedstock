@@ -1,0 +1,31 @@
+From 414856473075f7460ac7a0906b3f0c55989ce5c4 Mon Sep 17 00:00:00 2001
+From: John Kirkham <kirkhamj@janelia.hhmi.org>
+Date: Thu, 9 Mar 2017 10:26:09 -0500
+Subject: [PATCH] Fix doctest on Windows by forcing shape of `int`s
+
+Unfortunately Windows and Unix handle 64-bit integers differently. This
+is because on Windows `int` represents 32-bit integers; whereas, on Unix
+`int` represents 64-bit integers. As NumPy wants to use large enough
+integers to have 64-bit precision, it uses Python's `int` on Unix and
+Python's `long` on Windows. This causes a doctest that relies on shape
+in `get_ndpointer_type` to fail on Windows. Particularly this fails on
+Windows Python 2.7 64-bit. To fix this, we forcibly convert the shape to
+`int` values regardless of what that means. This should stabilize the
+representation of these values across platforms.
+---
+ npctypes/types.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git npctypes/types.py npctypes/types.py
+index 7618b35..6ff1e02 100644
+--- npctypes/types.py
++++ npctypes/types.py
+@@ -93,7 +93,7 @@ def get_ndpointer_type(a):
+             dtype('float64')
+             >>> a_ptr._ndim_
+             2
+-            >>> a_ptr._shape_
++            >>> tuple(int(s) for s in a_ptr._shape_)
+             (3, 4)
+             >>> a_ptr._flags_
+             1285

@@ -1,0 +1,33 @@
+From a2fe17722f8aa1f5c2d8353203f4d598f915a31f Mon Sep 17 00:00:00 2001
+From: John Kirkham <kirkhamj@janelia.hhmi.org>
+Date: Thu, 9 Mar 2017 02:37:45 -0500
+Subject: [PATCH] Use NumPy 32-bit int in `tinfo` doctest.
+
+Appears that on Windows `int` means 32-bit int even when a 64-bit build
+of Python was made. So instead of relying on `int` generally, which will
+vary between 64-bit or 32-bit for Unix or Windows respectively, specify
+the number of bits with a NumPy type. Also as there is a chance of
+representation subtleties between Unix and Windows with a 64-bit int
+(e.g. `L` postfix) chose a type that is least likely to run into these
+issues in the doctest. In particular, switch to a 32-bit int from NumPy.
+This both specifies a specific type of integer and picks one where its
+max and min values will fall within what a 32-bit int can represent.
+---
+ npctypes/types.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git npctypes/types.py npctypes/types.py
+index 3eb55cc..7618b35 100644
+--- npctypes/types.py
++++ npctypes/types.py
+@@ -29,8 +29,8 @@ def tinfo(a_type):
+             >>> tinfo(complex)
+             finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)
+ 
+-            >>> tinfo(int)
+-            iinfo(min=-9223372036854775808, max=9223372036854775807, dtype=int64)
++            >>> tinfo(numpy.int32)
++            iinfo(min=-2147483648, max=2147483647, dtype=int32)
+     """
+ 
+     a_type = numpy.dtype(a_type).type
