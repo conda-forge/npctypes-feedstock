@@ -1,6 +1,6 @@
 {% set name = "npctypes" %}
-{% set version = "0.0.2" %}
-{% set sha256 = "79e27d0358d9768f64a30ba20f4d5e8391fb7e9eaefe112955e8e066abce3005" %}
+{% set version = "0.0.4" %}
+{% set sha256 = "4832bfce8dbc35298c8bea7d1533c9f500691a51719fb10bb2ffce59123d5e50" %}
 
 package:
   name: {{ name|lower }}
